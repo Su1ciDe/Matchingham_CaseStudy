@@ -12,4 +12,11 @@ public class Player : Singleton<Player>
 		PlayerController = GetComponent<PlayerController>();
 		GunController = GetComponent<GunController>();
 	}
+
+	private void OnLevelStarted()
+	{
+		PlayerController.CanControl = true;
+		PlayerMovement.CanMove = true;
+		GunController.Gun.StartFiring();
+	}
 }
