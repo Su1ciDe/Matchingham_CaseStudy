@@ -11,4 +11,7 @@ public class GameManager : Singleton<GameManager>
 			return mainCamera;
 		}
 	}
+
+	[Space]
+	public ColorScheme ColorScheme;
 }

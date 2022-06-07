@@ -79,7 +79,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FiringRate: 1
   GunType: 0
-  bulletSpeed: 1
+  BulletSpeed: 25
+  BulletDistance: 100
   muzzle: {fileID: 8680671951430912130}
 --- !u!1 &8195051992742701552
 GameObject:

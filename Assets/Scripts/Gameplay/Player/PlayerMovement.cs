@@ -2,9 +2,18 @@
 
 public class PlayerMovement : MonoBehaviour
 {
-	public bool CanMove { get; set; } = true;
+	private bool canMove = true;
+	public bool CanMove
+	{
+		get => canMove;
+		set
+		{
+			canMove = value;
+			Player.Instance.Animations.SetBool(AnimationType.Running, value);
+		}
+	}
 
-	[SerializeField] private float moveSpeed = 500;
+	[SerializeField] private float moveSpeed = 10;
 	[SerializeField] private float moveSpeedMultiplier = 1;
 
 	private void Update()
