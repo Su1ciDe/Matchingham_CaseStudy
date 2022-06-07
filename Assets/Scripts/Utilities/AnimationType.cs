@@ -4,4 +4,5 @@
 	Pistol,
 	Rifle,
 	Rotate,
+	Die
 }

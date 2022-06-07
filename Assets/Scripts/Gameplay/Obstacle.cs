@@ -43,10 +43,12 @@ public class Obstacle : MonoBehaviour
 		}
 	}
 
+#if UNITY_EDITOR
 	private void OnValidate()
 	{
 		StartCoroutine(Setup());
 	}
+#endif
 
 	private void OnTriggerEnter(Collider other)
 	{
@@ -85,7 +87,7 @@ public class Obstacle : MonoBehaviour
 		else if (ObstacleType.Equals(ObstacleType.Undestroyable))
 		{
 			transform.DOKill();
-			transform.DOMove(1 * bullet.transform.forward, .2f).SetEase(Ease.InOutSine);
+			transform.DOMove(transform.position + (1 * bullet.transform.forward), .2f).SetEase(Ease.InOutSine);
 		}
 	}
 }

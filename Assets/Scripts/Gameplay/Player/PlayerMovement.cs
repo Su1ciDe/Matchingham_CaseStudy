@@ -2,7 +2,7 @@
 
 public class PlayerMovement : MonoBehaviour
 {
-	private bool canMove = true;
+	private bool canMove;
 	public bool CanMove
 	{
 		get => canMove;

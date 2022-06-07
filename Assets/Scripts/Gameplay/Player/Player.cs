@@ -13,12 +13,29 @@ public class Player : Singleton<Player>
 		PlayerController = GetComponent<PlayerController>();
 		GunController = GetComponent<GunController>();
 		Animations = GetComponentInChildren<AnimationController>();
-
 	}
 
-	private void Start()
+	private void OnEnable()
 	{
-		OnLevelStarted();
+		LevelManager.OnLevelLoad += OnLevelLoaded;
+		LevelManager.OnLevelStart += OnLevelStarted;
+		LevelManager.OnLevelSuccess += OnLevelSuccess;
+		LevelManager.OnLevelFail += OnLevelFailed;
+	}
+
+	private void OnDisable()
+	{
+		LevelManager.OnLevelLoad -= OnLevelLoaded;
+		LevelManager.OnLevelStart -= OnLevelStarted;
+		LevelManager.OnLevelSuccess -= OnLevelSuccess;
+		LevelManager.OnLevelFail -= OnLevelFailed;
+	}
+
+	private void OnLevelLoaded()
+	{
+		transform.position = Vector3.zero;
+		GunController.CurrentGunIndex = 0;
+		GunController.Gun = GunController.Guns[0];
 	}
 
 	private void OnLevelStarted()
@@ -28,8 +45,17 @@ public class Player : Singleton<Player>
 		GunController.Gun.StartFiring();
 	}
 
+	private void OnLevelSuccess()
+	{
+	}
+
+	private void OnLevelFailed()
+	{
+	}
+
 	public void Die()
 	{
-		
+		Animations.SetTrigger(AnimationType.Die);
+		LevelManager.Instance.GameFail();
 	}
 }
