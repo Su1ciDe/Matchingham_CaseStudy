@@ -59,6 +59,11 @@ public class Player : Singleton<Player>
 		GunController.Gun.StopFiring();
 	}
 
+	public void Finish()
+	{
+		LevelManager.Instance.GameSuccess();
+	}
+
 	public void Die()
 	{
 		Animations.SetTrigger(AnimationType.Die);
