@@ -17,7 +17,12 @@ public class Obstacle : MonoBehaviour
 
 	private List<Rigidbody> fragments;
 
-	public IEnumerator Setup()
+	public void Setup()
+	{
+		StartCoroutine(SetupCoroutine());
+	}
+
+	private IEnumerator SetupCoroutine()
 	{
 		if (ObstacleType.Equals(ObstacleType.Destroyable))
 		{
@@ -34,6 +39,9 @@ public class Obstacle : MonoBehaviour
 		GameObject model = null;
 		if (Model)
 			model = Instantiate(Model, modelHolder);
+		else
+			Debug.LogWarning(gameObject.name + ": Insert an Obstacle model into the \"Model\" slot");
+
 		if (model)
 		{
 			// Change model colors
@@ -63,7 +71,7 @@ public class Obstacle : MonoBehaviour
 #if UNITY_EDITOR
 	private void OnValidate()
 	{
-		StartCoroutine(Setup());
+		StartCoroutine(SetupCoroutine());
 	}
 #endif
 

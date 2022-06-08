@@ -5,6 +5,7 @@ public class GunController : MonoBehaviour
 {
 	public Gun Gun { get; set; }
 	public int CurrentGunIndex { get; set; }
+
 	public List<Gun> Guns = new List<Gun>();
 
 	private void Awake()
@@ -14,7 +15,9 @@ public class GunController : MonoBehaviour
 
 	public void UpgradeGun()
 	{
-		CurrentGunIndex = Mathf.Clamp(CurrentGunIndex + 1, 0, Guns.Count);
+		if (CurrentGunIndex + 1 >= Guns.Count) return;
+
+		CurrentGunIndex++;
 		ChangeGun(CurrentGunIndex);
 	}
 
@@ -26,9 +29,13 @@ public class GunController : MonoBehaviour
 			{
 				Guns[i].gameObject.SetActive(true);
 				Gun = Guns[i];
+				Gun.StartFiring();
 			}
 			else
+			{
+				Guns[i].StopFiring();
 				Guns[i].gameObject.SetActive(false);
+			}
 		}
 	}
 }
