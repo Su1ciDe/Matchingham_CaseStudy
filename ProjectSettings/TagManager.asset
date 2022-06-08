@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - DestructableObstacle
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - Bullet
   - Obstacle
   - Ground
-  - 
+  - Obstacle_Collider
   - 
   - 
   - 

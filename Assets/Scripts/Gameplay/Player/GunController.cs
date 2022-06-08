@@ -14,9 +14,21 @@ public class GunController : MonoBehaviour
 
 	public void UpgradeGun()
 	{
+		CurrentGunIndex = Mathf.Clamp(CurrentGunIndex + 1, 0, Guns.Count);
+		ChangeGun(CurrentGunIndex);
+	}
+
+	public void ChangeGun(int index)
+	{
 		for (int i = 0; i < Guns.Count; i++)
-			Guns[i].gameObject.SetActive(false);
-		Gun = Guns[Mathf.Clamp(CurrentGunIndex++, 0, Guns.Count)];
-		Guns[CurrentGunIndex].gameObject.SetActive(true);
+		{
+			if (i.Equals(index))
+			{
+				Guns[i].gameObject.SetActive(true);
+				Gun = Guns[i];
+			}
+			else
+				Guns[i].gameObject.SetActive(false);
+		}
 	}
 }

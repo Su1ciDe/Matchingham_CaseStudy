@@ -35,7 +35,7 @@ public class Player : Singleton<Player>
 	{
 		transform.position = Vector3.zero;
 		GunController.CurrentGunIndex = 0;
-		GunController.Gun = GunController.Guns[0];
+		GunController.ChangeGun(0);
 	}
 
 	private void OnLevelStarted()

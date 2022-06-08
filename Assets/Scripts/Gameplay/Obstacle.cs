@@ -1,10 +1,12 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
+	public bool IsDestroyed { get; set; }
 	public int HitCount = 1;
 	public ObstacleType ObstacleType;
 	public GameObject Model;
@@ -12,6 +14,8 @@ public class Obstacle : MonoBehaviour
 	[Space]
 	[SerializeField] private Transform modelHolder;
 	[SerializeField] private TextMeshProUGUI txtHitCount;
+
+	private List<Rigidbody> fragments;
 
 	public IEnumerator Setup()
 	{
@@ -31,7 +35,20 @@ public class Obstacle : MonoBehaviour
 		if (Model)
 			model = Instantiate(Model, modelHolder);
 		if (model)
-			model.GetComponentInChildren<MeshRenderer>().material = GameManager.Instance.ColorScheme.ColorSchemeDictionary[ObstacleType];
+		{
+			// Change model colors
+			var meshRenderers = model.GetComponentsInChildren<MeshRenderer>();
+			foreach (MeshRenderer meshRenderer in meshRenderers)
+				meshRenderer.material = GameManager.Instance.ColorScheme.ColorSchemeDictionary[ObstacleType];
+
+			// if destructable add rigidbodies to the variable
+			fragments = new List<Rigidbody>();
+			foreach (Transform child in model.transform)
+			{
+				if (child.TryGetComponent(out Rigidbody rb))
+					fragments.Add(rb);
+			}
+		}
 	}
 
 	private IEnumerator DestroyChild()
@@ -54,12 +71,12 @@ public class Obstacle : MonoBehaviour
 	{
 		if (!other.isTrigger || !other.attachedRigidbody) return;
 
-		if (other.attachedRigidbody.TryGetComponent(out Player player))
+		if (other.attachedRigidbody.TryGetComponent(out Player player) && !IsDestroyed)
 		{
 			OnPlayerHit(player);
 		}
 
-		if (other.attachedRigidbody.TryGetComponent(out Bullet bullet))
+		if (other.attachedRigidbody.TryGetComponent(out Bullet bullet) && !IsDestroyed)
 		{
 			OnBulletHit(bullet);
 		}
@@ -80,8 +97,21 @@ public class Obstacle : MonoBehaviour
 			txtHitCount.SetText(HitCount.ToString());
 			if (HitCount <= 0)
 			{
+				IsDestroyed = true;
+				txtHitCount.gameObject.SetActive(false);
 				//TODO: particles
-				Destroy(gameObject);
+
+				if (fragments.Count > 0)
+				{
+					foreach (Rigidbody fragment in fragments)
+					{
+						fragment.isKinematic = false;
+						fragment.AddExplosionForce(400, bullet.transform.position, 25);
+						Destroy(fragment.gameObject, 5);
+					}
+				}
+				else
+					Destroy(gameObject);
 			}
 		}
 		else if (ObstacleType.Equals(ObstacleType.Undestroyable))
