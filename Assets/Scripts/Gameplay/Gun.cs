@@ -11,12 +11,19 @@ public class Gun : MonoBehaviour
 	[Space]
 	[SerializeField] private Transform muzzle;
 
-	public bool CanFire { get; set; } = true;
+	public bool CanFire { get; set; }
 
 
 	public void StartFiring()
 	{
+		CanFire = true;
 		StartCoroutine(FireCoroutine());
+	}
+
+	public void StopFiring()
+	{
+		CanFire = false;
+		StopCoroutine(FireCoroutine());
 	}
 
 	private IEnumerator FireCoroutine()

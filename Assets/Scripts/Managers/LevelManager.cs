@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : Singleton<LevelManager>
 {
@@ -13,22 +15,34 @@ public class LevelManager : Singleton<LevelManager>
 		}
 	}
 
-	public static event UnityAction OnLevelLoad; 
+	public SceneAsset TutorialLevel, MainLevel;
+
+	public static event UnityAction OnLevelLoad;
 	public static event UnityAction OnLevelStart;
 	public static event UnityAction OnLevelSuccess;
 	public static event UnityAction OnLevelFail;
 
 	public void LoadLevel()
 	{
-		// 
+		if (CurrentLevel.Equals(1))
+		{
+			SceneManager.LoadScene(TutorialLevel.name);
+		}
+		else 
+		{
+			if (!SceneManager.GetActiveScene().name.Equals(MainLevel.name))
+				SceneManager.LoadScene(MainLevel.name);
+			// load level
+		}
+
 		OnLevelLoad?.Invoke();
 	}
-	
+
 	public void StartLevel()
 	{
 		OnLevelStart?.Invoke();
 	}
-	
+
 	public void GameSuccess()
 	{
 		CurrentLevel++;

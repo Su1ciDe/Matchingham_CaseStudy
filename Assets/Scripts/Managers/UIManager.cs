@@ -8,6 +8,12 @@ public class UIManager : Singleton<UIManager>
 	public LevelUI LevelUI => levelUI ? levelUI : levelUI = GetComponentInChildren<LevelUI>(true);
 	private LevelUI levelUI;
 	
+	public LevelSuccessScreen LevelSuccessScreen => levelSuccessScreen ? levelSuccessScreen : levelSuccessScreen = GetComponentInChildren<LevelSuccessScreen>(true);
+	private LevelSuccessScreen levelSuccessScreen;
+	
+	public LevelFailScreen LevelFailScreen => levelFailScreen ? levelFailScreen : levelFailScreen = GetComponentInChildren<LevelFailScreen>(true);
+	private LevelFailScreen levelFailScreen;
+	
 	private void Awake()
 	{
 		TapToStartScreen.SetActiveUI(true);
@@ -36,11 +42,11 @@ public class UIManager : Singleton<UIManager>
 
 	private void OnLevelSuccess()
 	{
-		//LevelSuccessScreen.SetActive(true);
+		LevelSuccessScreen.SetActive(true);
 	}
 
 	private void OnLevelFail()
 	{
-		//LevelFailScreen.SetActive(true);
+		LevelFailScreen.SetActive(true);
 	}
 }

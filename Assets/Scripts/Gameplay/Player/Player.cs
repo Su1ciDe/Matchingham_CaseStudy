@@ -47,10 +47,16 @@ public class Player : Singleton<Player>
 
 	private void OnLevelSuccess()
 	{
+		PlayerController.CanControl = false;
+		PlayerMovement.CanMove = false;
+		GunController.Gun.StopFiring();
 	}
 
 	private void OnLevelFailed()
 	{
+		PlayerController.CanControl = false;
+		PlayerMovement.CanMove = false;
+		GunController.Gun.StopFiring();
 	}
 
 	public void Die()
