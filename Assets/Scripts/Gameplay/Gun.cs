@@ -13,16 +13,18 @@ public class Gun : MonoBehaviour
 
 	public bool CanFire { get; set; }
 
-
 	public void StartFiring()
 	{
 		CanFire = true;
+		Player.Instance.GunController.Aim(.25f);
+
 		StartCoroutine(FireCoroutine());
 	}
 
 	public void StopFiring()
 	{
 		CanFire = false;
+		Player.Instance.GunController.Unaim();
 		StopCoroutine(FireCoroutine());
 	}
 

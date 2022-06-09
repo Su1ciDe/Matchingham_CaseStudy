@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private float rightLimit;
 
 	private Vector3 playerPos;
-	private float previousPosX;
+	private float deltaX, previousPosX;
 
 	private void Update()
 	{
@@ -29,10 +29,18 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetMouseButton(0))
 		{
 			playerPos = transform.position;
-			playerPos.x = Mathf.Clamp(playerPos.x + dragMultiplier * Time.deltaTime * (Input.mousePosition.x - previousPosX), leftLimit, rightLimit);
+			deltaX = Input.mousePosition.x - previousPosX;
+			playerPos.x = Mathf.Clamp(playerPos.x + dragMultiplier * Time.deltaTime * deltaX, leftLimit, rightLimit);
 			transform.position = playerPos;
 
+			Player.Instance.Animations.SetFloat(AnimationType.Rotate, Mathf.Clamp(deltaX / 10f, -1, 1));
+
 			previousPosX = Input.mousePosition.x;
+		}
+
+		if (Input.GetMouseButtonUp(0))
+		{
+			Player.Instance.Animations.SetFloat(AnimationType.Rotate, 0);
 		}
 	}
 }

@@ -13,6 +13,8 @@ public class Player : Singleton<Player>
 		PlayerController = GetComponent<PlayerController>();
 		GunController = GetComponent<GunController>();
 		Animations = GetComponentInChildren<AnimationController>();
+
+		GunController.Unaim();
 	}
 
 	private void OnEnable()
@@ -36,6 +38,7 @@ public class Player : Singleton<Player>
 		transform.position = Vector3.zero;
 		GunController.CurrentGunIndex = 0;
 		GunController.ChangeGun(0);
+		GunController.Unaim();
 	}
 
 	private void OnLevelStarted()
@@ -43,6 +46,7 @@ public class Player : Singleton<Player>
 		PlayerController.CanControl = true;
 		PlayerMovement.CanMove = true;
 		GunController.Gun.StartFiring();
+		GunController.Aim(.25f);
 	}
 
 	private void OnLevelSuccess()
@@ -62,10 +66,12 @@ public class Player : Singleton<Player>
 	public void Finish()
 	{
 		LevelManager.Instance.GameSuccess();
+		GunController.Unaim(.25f);
 	}
 
 	public void Die()
 	{
+		GunController.Unaim();
 		Animations.SetTrigger(AnimationType.Die);
 		LevelManager.Instance.GameFail();
 	}

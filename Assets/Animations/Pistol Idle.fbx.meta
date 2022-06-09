@@ -1,11 +1,14 @@
 fileFormatVersion: 2
-guid: 92ed8c3ab428192458af3047117a677d
+guid: 8967664ad9dcf864c8f26d395c7aed01
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Run Forward
+    second: mixamo.com
+  - first:
+      74: -5075752359623666121
+    second: Pistol Idle
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,13 +39,13 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Run Forward
+      name: Pistol Idle
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 15
+      lastFrame: 120
       wrapMode: 0
-      orientationOffsetY: -34.15
+      orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0

@@ -3,12 +3,30 @@ using UnityEngine;
 
 public class GunController : MonoBehaviour
 {
-	public Gun Gun { get; set; }
+	private Gun gun;
+	public Gun Gun
+	{
+		get => gun;
+		set
+		{
+			gun = value;
+			if (gun.GunType.Equals(GunType.Pistol))
+			{
+				Player.Instance.Animations.SetBool(AnimationType.Rifle, false);
+				Player.Instance.Animations.SetBool(AnimationType.Pistol, true);
+			}
+			else if (gun.GunType.Equals(GunType.Rifle))
+			{
+				Player.Instance.Animations.SetBool(AnimationType.Pistol, false);
+				Player.Instance.Animations.SetBool(AnimationType.Rifle, true);
+			}
+		}
+	}
 	public int CurrentGunIndex { get; set; }
 
 	public List<Gun> Guns = new List<Gun>();
 
-	private void Awake()
+	private void Start()
 	{
 		Gun = Guns[0];
 	}
@@ -25,17 +43,22 @@ public class GunController : MonoBehaviour
 	{
 		for (int i = 0; i < Guns.Count; i++)
 		{
-			if (i.Equals(index))
-			{
-				Guns[i].gameObject.SetActive(true);
-				Gun = Guns[i];
-				Gun.StartFiring();
-			}
-			else
-			{
-				Guns[i].StopFiring();
-				Guns[i].gameObject.SetActive(false);
-			}
+			Guns[i].StopFiring();
+			Guns[i].gameObject.SetActive(false);
 		}
+
+		Guns[index].gameObject.SetActive(true);
+		Gun = Guns[index];
+		Gun.StartFiring();
+	}
+
+	public void Aim(float aimTime = 0)
+	{
+		Player.Instance.Animations.ChangeBodyAimWeight(1, aimTime);
+	}
+
+	public void Unaim(float aimTime = 0)
+	{
+		Player.Instance.Animations.ChangeBodyAimWeight(0, aimTime);
 	}
 }
