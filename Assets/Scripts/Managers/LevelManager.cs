@@ -31,33 +31,8 @@ public class LevelManager : Singleton<LevelManager>
 		LoadLevel();
 	}
 
-	private void Start()
-	{
-		// LoadLevel();
-	}
-
 	public void LoadLevel()
 	{
-		// if (CurrentLevel.Equals(1))
-		// {
-		// 	if (!SceneManager.GetActiveScene().name.Equals(TutorialLevel.name))
-		// 		SceneManager.LoadScene(TutorialLevel.name);
-		// }
-		// else
-		// {
-		// 	if (!SceneManager.GetActiveScene().name.Equals(MainLevel.name))
-		// 	{
-		// 		SceneManager.LoadScene(MainLevel.name);
-		// 		// return;
-		// 	}
-		//
-		// 	LevelGenerator.Instance.GenerateLevel();
-		// }
-		//
-		// Debug.Log("alo " + SceneManager.GetActiveScene().name);
-		// OnLevelLoad?.Invoke();
-		// Debug.Log("alo2");
-
 		StartCoroutine(LoadLevelCoroutine());
 	}
 
@@ -71,20 +46,15 @@ public class LevelManager : Singleton<LevelManager>
 		else
 		{
 			if (!SceneManager.GetActiveScene().name.Equals(MainLevel.name))
-			{
 				loadLevel = SceneManager.LoadSceneAsync(MainLevel.name);
-			}
 
-			Debug.Log("hop");
 			yield return new WaitUntil(() => loadLevel.isDone);
 
 			LevelGenerator.Instance.GenerateLevel();
 		}
 
 		yield return new WaitUntil(() => loadLevel.isDone);
-		Debug.Log("alo");
 		OnLevelLoad?.Invoke();
-		Debug.Log("alo2");
 	}
 
 	public void StartLevel()
