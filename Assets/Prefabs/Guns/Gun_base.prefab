@@ -80,7 +80,7 @@ MonoBehaviour:
   FiringRate: 1
   GunType: 0
   BulletSpeed: 25
-  BulletDistance: 100
+  BulletDistance: 40
   muzzle: {fileID: 8680671951430912130}
 --- !u!1 &8195051992742701552
 GameObject:

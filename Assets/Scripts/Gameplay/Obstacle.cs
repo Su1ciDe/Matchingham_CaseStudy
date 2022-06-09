@@ -71,7 +71,8 @@ public class Obstacle : MonoBehaviour
 #if UNITY_EDITOR
 	private void OnValidate()
 	{
-		StartCoroutine(SetupCoroutine());
+		if (gameObject.activeInHierarchy)
+			StartCoroutine(SetupCoroutine());
 	}
 #endif
 

@@ -17,6 +17,14 @@ public class Player : Singleton<Player>
 		GunController.Unaim();
 	}
 
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.S))
+		{
+			LevelManager.Instance.GameSuccess();
+		}
+	}
+
 	private void OnEnable()
 	{
 		LevelManager.OnLevelLoad += OnLevelLoaded;
@@ -37,8 +45,9 @@ public class Player : Singleton<Player>
 	{
 		transform.position = Vector3.zero;
 		GunController.CurrentGunIndex = 0;
-		GunController.ChangeGun(0);
+		GunController.ChangeGun(0, false);
 		GunController.Unaim();
+		GunController.Gun.StopFiring();
 	}
 
 	private void OnLevelStarted()

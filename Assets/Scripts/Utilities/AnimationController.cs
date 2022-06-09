@@ -10,12 +10,16 @@ public class AnimationController : MonoBehaviour
 	[SerializeField] private MultiAimConstraint bodyAim;
 	[SerializeField] private MultiAimConstraint handAim;
 
-	private Animator animator;
+	private Animator anim;
+	//private Animator animator => anim || anim.runtimeAnimatorController ? anim : anim = GetComponent<Animator>();
+	[SerializeField]private Animator animator;
+	public LevelUI LevelUI => levelUI ? levelUI : levelUI = GetComponentInChildren<LevelUI>(true);
+	private LevelUI levelUI;
 	private readonly Dictionary<AnimationType, int> hashDictionary = new Dictionary<AnimationType, int>();
 
 	private void Awake()
 	{
-		animator = GetComponent<Animator>();
+		// animator = GetComponent<Animator>();
 
 		if (animator)
 			SetupAnimationHashes();

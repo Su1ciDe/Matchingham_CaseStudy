@@ -7,4 +7,9 @@ public class GameManager : Singleton<GameManager>
 
 	[Space]
 	public ColorScheme ColorScheme;
+
+	private void Awake()
+	{
+		DontDestroyOnLoad(this);
+	}
 }
